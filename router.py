@@ -47,7 +47,7 @@ def predict():
 
         insert_treatment(df['emp_id'][0], prediction[0])
 
-        return Response(prediction,status=HTTPStatus.OK)
+        return Response("Your response has been recorded and sent to your manager for approval.",status=HTTPStatus.OK)
 
     except Exception as e:
         return Response(str(e),status=HTTPStatus.BAD_REQUEST)
