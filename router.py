@@ -1,11 +1,14 @@
 from flask import Blueprint, Response, request
 
 from sklearn.externals import joblib
-import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+import pandas as pd 
 from sklearn.ensemble import RandomForestClassifier
 import os
 
 from http import HTTPStatus
+
+from dal import insert_emp, insert_treatment
 
 router = Blueprint('prediction', 'prediction')
 
@@ -25,15 +28,25 @@ def model_check():
 def predict():
 
     observation = pd.DataFrame()
+    df = pd.DataFrame()
+    classifier = joblib.load(os.path.join(os.path.dirname( __file__ ), 'treatment_model.sav'))
+    encoders = joblib.load(os.path.join(os.path.dirname( __file__ ), 'encoders.sav'))
+    
+    for k, v in request.form.items():
+        df[k] = pd.Series(v)
+        if k in encoders.keys():
+            observation[k] = encoders[k].transform(pd.Series(v))
 
-    observation['family_history'] = request.form['family_history']
-    observation['work_interfere'] = request.form['work_interfere']
-    observation['benifits'] = request.form['benifits']
-    observation['care_options'] = request.form['care_options']
-    observation['obs_consequence'] =request.form['obs_consequence']
-    observation['leave'] =  request.form['leave']
-    classifier = joblib.load('treatment_model.sav')
+    insert_emp(df)
 
-    return Response(status=HTTPStatus.OK)
+    sc_x = encoders['minmax_transform']
+    observation_df = pd.DataFrame(sc_x.transform(observation))
+    observation_df.columns = observation.columns
+
+    prediction = encoders['treatment'].inverse_transform(classifier.predict(observation_df))
+
+    insert_treatment(df['emp_id'][0], prediction[0])
+
+    return Response(prediction,status=HTTPStatus.OK)
 
 
