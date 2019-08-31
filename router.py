@@ -16,7 +16,7 @@ def healthcheck():
 @router.route("/loadmodel")
 def model_check():
     try:
-=        classifier = joblib.load(os.path.join(os.path.dirname( __file__ ), 'treatment_model.sav'))
+        classifier = joblib.load(os.path.join(os.path.dirname( __file__ ), 'treatment_model.sav'))
         return Response(status=HTTPStatus.OK)
     except Exception as e:
         return Response(e,status=HTTPStatus.BAD_REQUEST)
