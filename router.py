@@ -16,11 +16,10 @@ def healthcheck():
 @router.route("/loadmodel")
 def model_check():
     try:
-        print(os.listdir(os.path.dirname( __file__ )))
-        #classifier = joblib.load(os.path.join(os.path.dirname( __file__ ), 'treatment_model.sav'))
-        return Response(os.listdir(os.path.dirname( __file__ )),status=HTTPStatus.OK)
+        classifier = joblib.load(os.path.join(os.path.dirname( __file__ ), 'treatment_model.sav'))
+        return Response(status=HTTPStatus.OK)
     except Exception as e:
-        return Response(e,status=HTTPStatus.BAD_REQUEST)
+        return Response(str(e),status=HTTPStatus.BAD_REQUEST)
 
 @router.route("/predict",methods=['POST',])
 def predict():
