@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, request
+from flask import Blueprint, Response, request, jsonify
 
 from sklearn.externals import joblib
 from sklearn.preprocessing import MinMaxScaler
@@ -29,8 +29,8 @@ def approvals():
     try:
 
         df = get_approval_list()
-
-        return Response(df)
+        df_json = df.to_json(orient='records')
+        return Response(df_json, content_type='application\json')
 
     except Exception as e:
         return Response(str(e),status=HTTPStatus.BAD_REQUEST)
