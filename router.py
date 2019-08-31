@@ -3,6 +3,8 @@ from flask import Blueprint, Response, request
 from sklearn.externals import joblib
 import pandas as pd
 
+import os
+
 from http import HTTPStatus
 
 router = Blueprint('prediction', 'prediction')
@@ -14,10 +16,10 @@ def healthcheck():
 @router.route("/loadmodel")
 def model_check():
     try:
-        classifier = joblib.load('./treatment_model.sav')
+=        classifier = joblib.load(os.path.join(os.path.dirname( __file__ ), 'treatment_model.sav'))
         return Response(status=HTTPStatus.OK)
     except Exception as e:
-        return Response(status=HTTPStatus.BAD_REQUEST)
+        return Response(e,status=HTTPStatus.BAD_REQUEST)
 
 @router.route("/predict",methods=['POST',])
 def predict():
