@@ -2,7 +2,7 @@ from flask import Blueprint, Response, request
 
 from sklearn.externals import joblib
 import pandas as pd
-
+from xgboost import XGBClassifier
 import os
 
 from http import HTTPStatus
