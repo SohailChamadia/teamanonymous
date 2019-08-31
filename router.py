@@ -11,6 +11,14 @@ router = Blueprint('prediction', 'prediction')
 def healthcheck():
     return Response(status=HTTPStatus.OK)
 
+@router.route("/")
+def healthcheck():
+    try:
+        classifier = joblib.load('treatment_model.sav')
+        return Response(status=HTTPStatus.OK)
+    except Exception as e:
+        return Response(status=HTTPStatus.BAD_REQUEST)
+
 @router.route("/predict",methods=['POST',])
 def predict():
 
