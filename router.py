@@ -32,8 +32,7 @@ def predict():
         df = pd.DataFrame()
         classifier = joblib.load(os.path.join(os.path.dirname( __file__ ), 'treatment_model.sav'))
         encoders = joblib.load(os.path.join(os.path.dirname( __file__ ), 'encoders.sav'))
-        
-        for k, v in request.form.items():
+        for k, v in request.json.items():
             df[k] = pd.Series(v)
             if k in encoders.keys():
                 observation[k] = encoders[k].transform(pd.Series(v))
