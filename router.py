@@ -11,8 +11,8 @@ router = Blueprint('prediction', 'prediction')
 def healthcheck():
     return Response(status=HTTPStatus.OK)
 
-@router.route("/")
-def healthcheck():
+@router.route("/loadmodel")
+def model_check():
     try:
         classifier = joblib.load('treatment_model.sav')
         return Response(status=HTTPStatus.OK)
