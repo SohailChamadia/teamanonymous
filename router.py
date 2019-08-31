@@ -26,27 +26,31 @@ def model_check():
 
 @router.route("/predict",methods=['POST',])
 def predict():
+    try:
 
-    observation = pd.DataFrame()
-    df = pd.DataFrame()
-    classifier = joblib.load(os.path.join(os.path.dirname( __file__ ), 'treatment_model.sav'))
-    encoders = joblib.load(os.path.join(os.path.dirname( __file__ ), 'encoders.sav'))
-    
-    for k, v in request.form.items():
-        df[k] = pd.Series(v)
-        if k in encoders.keys():
-            observation[k] = encoders[k].transform(pd.Series(v))
+        observation = pd.DataFrame()
+        df = pd.DataFrame()
+        classifier = joblib.load(os.path.join(os.path.dirname( __file__ ), 'treatment_model.sav'))
+        encoders = joblib.load(os.path.join(os.path.dirname( __file__ ), 'encoders.sav'))
+        
+        for k, v in request.form.items():
+            df[k] = pd.Series(v)
+            if k in encoders.keys():
+                observation[k] = encoders[k].transform(pd.Series(v))
 
-    insert_emp(df)
+        insert_emp(df)
 
-    sc_x = encoders['minmax_transform']
-    observation_df = pd.DataFrame(sc_x.transform(observation))
-    observation_df.columns = observation.columns
+        sc_x = encoders['minmax_transform']
+        observation_df = pd.DataFrame(sc_x.transform(observation))
+        observation_df.columns = observation.columns
 
-    prediction = encoders['treatment'].inverse_transform(classifier.predict(observation_df))
+        prediction = encoders['treatment'].inverse_transform(classifier.predict(observation_df))
 
-    insert_treatment(df['emp_id'][0], prediction[0])
+        insert_treatment(df['emp_id'][0], prediction[0])
 
-    return Response(prediction,status=HTTPStatus.OK)
+        return Response(prediction,status=HTTPStatus.OK)
+
+    except Exception as e:
+        return Response(str(e),status=HTTPStatus.BAD_REQUEST)
 
 

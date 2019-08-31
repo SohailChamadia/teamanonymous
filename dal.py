@@ -3,27 +3,34 @@ from sqlalchemy import create_engine
 import urllib
 
 def insert_treatment(emp_id, treatment):
+    try:
+        conn_string = """Driver={ODBC Driver 17 for SQL Server};Server=skillenza.database.windows.net,1433;
+                        Database=skillenza;Uid=anonymous@skillenza;Pwd=test_user123;Encrypt=yes;TrustServerCertificate=no;
+                        Connection Timeout=30;"""
+        conn = pyodbc.connect(conn_string)
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO treatment_details VALUES (?,?,'pending')", emp_id, treatment)
 
-    conn_string = """Driver={ODBC Driver 13 for SQL Server};Server=skillenza.database.windows.net,1433;
-                    Database=skillenza;Uid=anonymous@skillenza;Pwd=test_user123;Encrypt=yes;TrustServerCertificate=no;
-                    Connection Timeout=30;"""
-    conn = pyodbc.connect(conn_string)
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO treatment_details VALUES (?,?,'pending')", emp_id, treatment)
+        cursor.commit()
+        cursor.close()
+        conn.close()
 
-    cursor.commit()
-    cursor.close()
-    conn.close()
+    except Exception as e:
+        raise e
 
 def insert_emp(df):
-    conn_string = """Driver={ODBC Driver 13 for SQL Server};Server=skillenza.database.windows.net,1433;
-                    Database=skillenza;Uid=anonymous@skillenza;Pwd=test_user123;Encrypt=yes;TrustServerCertificate=no;
-                    Connection Timeout=30;"""
+    try:
+        conn_string = """Driver={ODBC Driver 17 for SQL Server};Server=skillenza.database.windows.net,1433;
+                        Database=skillenza;Uid=anonymous@skillenza;Pwd=test_user123;Encrypt=yes;TrustServerCertificate=no;
+                        Connection Timeout=30;"""
 
-    params = urllib.parse.quote_plus(conn_string)
-    engine = create_engine('mssql+pyodbc:///?odbc_connect=%s' % params)
+        params = urllib.parse.quote_plus(conn_string)
+        engine = create_engine('mssql+pyodbc:///?odbc_connect=%s' % params)
 
-    df.to_sql('emp_details', con=engine, if_exists='append', index =False)
+        df.to_sql('emp_details', con=engine, if_exists='append', index =False)
 
-    engine.dispose()
+        engine.dispose()
+    except Exception as e:
+        raise e
+    
 
