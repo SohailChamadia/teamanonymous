@@ -2,6 +2,7 @@
   "name": "ang-material-owner-account",
   "version": "0.0.0",
   "scripts": {
+    "install":"npm install",
 
     "postinstall": "npm run build"
   },
