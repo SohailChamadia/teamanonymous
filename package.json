@@ -2,9 +2,7 @@
   "name": "ang-material-owner-account",
   "version": "0.0.0",
   "scripts": {
-    "postinstall": "npm run build"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^6.1.4",
     "@angular/cdk": "^6.4.6",
