@@ -8,7 +8,7 @@ import os
 
 from http import HTTPStatus
 
-from dal import insert_emp, insert_treatment, get_approval_list
+from dal import insert_emp, insert_treatment, get_approval_list, update_approval
 
 router = Blueprint('prediction', 'prediction')
 
@@ -24,8 +24,25 @@ def model_check():
     except Exception as e:
         return Response(str(e),status=HTTPStatus.BAD_REQUEST)
 
+@router.route("/accept_approval/<emp_id>")
+def accept_approval(emp_id):
+    try:
+        update_approval(emp_id, 'Accepted')
+        return Response(status=HTTPStatus.OK)
+    except Exception as e:
+        return Response(str(e),status=HTTPStatus.BAD_REQUEST)
+
+@router.route("/reject_approval/<emp_id>")
+def reject_approval(emp_id):
+    try:
+        update_approval(emp_id, 'Rejected')
+        return Response(status=HTTPStatus.OK)
+    except Exception as e:
+        return Response(str(e),status=HTTPStatus.BAD_REQUEST)
+
 @router.route("/approval_list")
 def approvals():
+
     try:
 
         df = get_approval_list()

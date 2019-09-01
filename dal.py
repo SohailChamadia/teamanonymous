@@ -3,6 +3,23 @@ from sqlalchemy import create_engine
 import urllib
 import pandas as pd
 
+def update_approval(emp_id, approval):
+    try:
+        conn_string = """Driver={ODBC Driver 17 for SQL Server};Server=skillenza.database.windows.net,1433;
+                        Database=skillenza;Uid=anonymous@skillenza;Pwd=test_user123;Encrypt=yes;TrustServerCertificate=no;
+                        Connection Timeout=30;"""
+        conn = pyodbc.connect(conn_string)
+        
+        cursor = conn.cursor()
+        cursor.execute("UPDATE treatment_details SET approval_status = ? WHERE emp_id = ?", approval, emp_id)
+
+        cursor.commit()
+        cursor.close()
+        conn.close()
+
+    except Exception as e:
+        raise e
+
 def get_approval_list():
     try:
         conn_string = """Driver={ODBC Driver 17 for SQL Server};Server=skillenza.database.windows.net,1433;
