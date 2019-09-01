@@ -1,6 +1,10 @@
 {
   "name": "ang-material-owner-account",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": ">=6.0.0"
+  },
   "scripts": {
     "ng": "ng",
    "start": "ng serve",
