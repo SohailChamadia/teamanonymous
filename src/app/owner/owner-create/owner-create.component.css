@@ -1,0 +1,42 @@
+mat-form-field{
+    width: 500px;
+    padding: 20px 40px 20px 40px;
+}
+
+mat-card-title{
+    text-align: center;
+}
+
+ .mat-radio-button {
+    margin-right: 16px;
+    
+  }
+
+  mat-form-field.example-full-width {
+    width: 80%;
+  }
+
+  div.radio-div {
+      display: inline-block;
+      width: 500px;
+    padding: 20px 40px 20px 40px;
+  }
+
+  mat-radio-group.radio-item{
+      display: flex;
+      flex-wrap: wrap;
+      flex-basis: auto;
+      flex: 1 1 0;
+  }
+
+  .mat-subheader {
+      padding-left: 0px !important;
+      margin: 0px;
+      
+  }
+
+  .mat-radio-button {
+      padding-right: 16px;
+      margin-bottom: 16px;
+
+  }

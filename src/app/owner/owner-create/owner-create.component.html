@@ -1,0 +1,111 @@
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex.xs="100%" padding="0px">
+    <mat-card-title>Employee Details</mat-card-title>
+    <form [formGroup]="ownerForm" autocomplete="off" novalidate (ngSubmit)="createOwner(ownerForm.value)"
+      fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <mat-card-content>
+        ￼
+
+        <mat-form-field width="40%" padding="20px">
+          <input matInput type="text" placeholder="EMPLOYEE ID *" formControlName="emp_id" id="emp_id">
+          <mat-hint align="end">Exactly 7 characters long.</mat-hint>
+          <mat-error *ngIf="hasError('emp_id', 'required')">ID is required</mat-error>
+          <mat-error *ngIf="hasError('emp_id', 'maxlength')"> 7 characters</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field width="40%" padding="20px">
+          <input matInput type="text" placeholder="EMPLOYEE NAME" formControlName="emp_name" id="emp_name">
+          <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+          <mat-error *ngIf="hasError('emp_name', 'required')">Name is required</mat-error>
+          <mat-error *ngIf="hasError('emp_name', 'maxlength')">You have more than 60 characters</mat-error>
+        </mat-form-field>
+
+
+        <div class="radio-div">
+          <h3 mat-subheader align="center">Gender</h3>
+          <mat-radio-group formControlName="gender">
+            <mat-radio-button value="M">Male</mat-radio-button>
+            <mat-radio-button value="F">Female</mat-radio-button>
+            <mat-radio-button value="O">Others</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="radio-div">
+          <h3 mat-subheader align="center">Family History</h3>
+          <mat-radio-group formControlName="family_history">
+            <mat-radio-button value="Yes">Yes</mat-radio-button>
+            <mat-radio-button value="No">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="radio-div">
+          <h3 mat-subheader align="center">Work Interfere</h3>
+          <mat-radio-group formControlName="work_interfere">
+            <mat-radio-button value="NA">NA</mat-radio-button>
+            <mat-radio-button value="Often">Often</mat-radio-button>
+            <mat-radio-button value="Rarely">Rarely</mat-radio-button>
+            <mat-radio-button value="Sometimes">Sometimes</mat-radio-button>
+            <mat-radio-button value="Never">Never</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="radio-div">
+          <h3 mat-subheader align="center">Benefits</h3>
+          <mat-radio-group formControlName="benefits">
+            <mat-radio-button value="Yes">Yes</mat-radio-button>
+            <mat-radio-button value="No">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="radio-div">
+          <h3 mat-subheader align="center">Care Options</h3>
+          <mat-radio-group formControlName="care_options">
+            <mat-radio-button value="Yes">Yes</mat-radio-button>
+            <mat-radio-button value="No">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="radio-div">
+          <h3 mat-subheader align="center">Observable Consequence</h3>
+          <mat-radio-group formControlName="obs_consequence">
+            <mat-radio-button value="Yes">Yes</mat-radio-button>
+            <mat-radio-button value="No">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="radio-div">
+          <h3 mat-subheader align="center">Anonymity</h3>
+          <mat-radio-group class="radio-item" formControlName="anonymity">
+            <mat-radio-button value="Yes">Yes</mat-radio-button>
+            <mat-radio-button value="No">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="radio-div">
+          <h3 mat-subheader align="center">Leave</h3>
+          <mat-radio-group class="radio-item" formControlName="leave">
+            <mat-radio-button value="Don't know">Don't Know</mat-radio-button>
+            <mat-radio-button value="Somewhat difficult">Somewhat Difficult</mat-radio-button>
+            <mat-radio-button value="Somewhat easy">Somewhat Easy</mat-radio-button>
+            <mat-radio-button value="Very easy">Very Easy</mat-radio-button>
+            <mat-radio-button value="Very difficult">Very Difficult</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+
+        <mat-form-field class="example-full-width" formControlNAme="comments">
+          <textarea matInput placeholder="Leave a comment"></textarea>
+        </mat-form-field>
+
+      </mat-card-content>
+      <mat-card-actions align="center">
+        <button mat-raised-button color="primary" [disabled]="!ownerForm.valid">Create</button>
+        <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+      </mat-card-actions>
+
+      <ngx-spinner bdOpacity=0.6 bdColor="#333" size="medium" color="#fff" type="ball-atom" [fullScreen]="true">
+        <p style="color: white"> Processing... </p>
+      </ngx-spinner>
+    </form>
+  </mat-card>
+</section>
