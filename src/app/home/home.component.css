@@ -16,6 +16,7 @@ html, body {
 
 .uiux-side {
   background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/74452/website-post-its.png");
+  float:right !important;
 }
 
 .split-pane {
@@ -23,7 +24,7 @@ html, body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  height: 50%;
+  height: 80%;
   min-height: 9em;
   font-size: 2em;
   color: white;
@@ -39,10 +40,6 @@ html, body {
 }
 .split-pane > div {
   position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
   text-align: center;
 }
 .split-pane > div .text-content {
@@ -99,11 +96,7 @@ html, body {
   font-family: 'Open Sans', sans-serif;
   text-align: center;
   width: 100%;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+  
 }
 @media (max-width: 925px) {
   #split-pane-or {
